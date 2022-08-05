@@ -1,25 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
-
-# @app.route('/')
-# def index():
-#     return 'Go away!'
-
-@app.route('/')
-def users():
-    user_arr = [
-        {
-            'email' : 'willpolich000@gmail.com',
-            'password' : 'password'
-        },
-        {
-            'email' : 'johnnyed747@gmail.com',
-            'password' : 'password'
-        } ,   
-    ]
-
-    return jsonify(user_arr)
 
 @app.route('/api')
 def test():
