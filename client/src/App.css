@@ -1,0 +1,14 @@
+.input-element {
+    padding: 5px;
+    margin: 5px;
+}
+
+.row {
+    display: flex;
+}
+
+.delete {
+    color: red;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
