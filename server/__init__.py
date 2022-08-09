@@ -15,9 +15,11 @@ INSTANCE_NAME = os.getenv('INSTANCE_NAME')
 
 app = Flask(__name__)
 env = 'PROD'
-if 'env' == 'DEV':
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/{DB_NAME}'
-    #  f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{PUBLIC_IP}:5432/{DB_NAME}"
+if env == 'DEV':
+    # Conn to dev db
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/{DB_NAME}'
+    # Conn to prod db from local
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@{PUBLIC_IP}:5432/{DB_NAME}"
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql+psycopg2://{USERNAME}:{PASSWORD}@/{DB_NAME}?host=/cloudsql/{PROJECT_ID}:{REGION}:{INSTANCE_NAME}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True

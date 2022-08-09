@@ -5,9 +5,11 @@ import './App.css'
 function App() {
 
   const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(false)
   const formRef = useRef()
 
   function getUsers() {
+    setLoading(true)
     fetch('/api/users').then(
       res => res.json(),
     ).then(
@@ -15,9 +17,12 @@ function App() {
         console.log(data)
         if (data.status === "success") {
           setUsers(data.result)
-        } 
+        }
+        setLoading(false) 
+        
       }
     )
+   
   }
 
   useEffect(() => {
@@ -75,12 +80,15 @@ function App() {
           </form>
         </div>
 
-        {users.map((user) => (
-          <div className="row">
-            <p className="delete" onClick={() => deleteUser(user.id)}>x</p><p key={user.id}>{user.first_name} {user.last_name}</p>
-          </div>
-         
-        ))}
+        {(loading === true) ? 
+          (<p>Loading...</p>)
+          :
+          (users.map((user) => (
+            <div className="row">
+              <p className="delete" onClick={() => deleteUser(user.id)}>x</p><p key={user.id}>{user.first_name} {user.last_name}</p>
+            </div>
+          ))
+        )}
 
       
     </div>
