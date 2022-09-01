@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from __init__ import app, db
+from __init__ import app, db, firestore_db
 from models.user import Users
 
 @app.route('/api/user', methods=['GET', 'POST', 'DELETE'])
@@ -32,6 +32,23 @@ def users():
     user_arr = []
     for user in users:
         user_arr.append(user.to_dict())
+
+    return_dict['result'] = user_arr
+
+    return jsonify(return_dict)
+
+@app.route('/api/users-firebase')
+def firebase_users():
+    return_dict = {
+        'status' : 'success',
+        'result' : []
+    }
+    user_arr = []
+    user_stream = firestore_db.collection("users").stream()
+    for user in user_stream:
+        user_data = user.to_dict()
+        user_data['id'] = user.reference.id
+        user_arr.append(user_data)
 
     return_dict['result'] = user_arr
 
