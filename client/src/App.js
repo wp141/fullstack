@@ -95,7 +95,7 @@ function App() {
       data => {
         if (data.status === "success") {
           formRef.current.reset()
-          getUsers()
+          getFirebaseUsers()
         } 
       }
     )
@@ -124,7 +124,7 @@ function App() {
     ).then(
       data => {
         if (data.status === "success") {
-          getUsers()
+          getFirebaseUsers()
         } 
       }
     )

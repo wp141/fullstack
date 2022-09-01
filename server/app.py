@@ -22,6 +22,25 @@ def user():
 
     return jsonify(return_dict)
 
+@app.route('/api/user-firebase', methods=['GET', 'POST', 'DELETE'])
+def user_firebase():
+    return_dict = {
+        'status' : 'success',
+        'result' : None
+    }
+    if request.method == 'POST':
+        user_data = request.json
+        firestore_db.collection("users").document().set({
+            "first_name" : user_data['fname'],
+            "last_name" : user_data['lname']
+        })
+
+    elif request.method == 'DELETE':
+        id = request.args.get('id')
+        firestore_db.collection("users").document(id).delete()
+
+    return jsonify(return_dict)
+
 @app.route('/api/users')
 def users():
     return_dict = {
@@ -38,7 +57,7 @@ def users():
     return jsonify(return_dict)
 
 @app.route('/api/users-firebase')
-def firebase_users():
+def users_firebase():
     return_dict = {
         'status' : 'success',
         'result' : []
